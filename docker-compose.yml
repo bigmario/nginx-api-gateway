@@ -1,0 +1,19 @@
+version: '3'
+services:
+
+  coffee:
+    build: coffee/.
+
+  tea:
+    build: tea/.
+
+  auth:
+    build: auth/.
+
+  nginx:
+    image: nginx
+    ports:
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
