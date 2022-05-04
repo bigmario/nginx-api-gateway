@@ -7,22 +7,23 @@ import (
 	"os"
 )
 
-func getServant() string {
-	servant, _ := os.Hostname()
-	return servant
-
+func getServant(w http.ResponseWriter) {
+	servant, err := os.Hostname()
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	w.Write([]byte("\nServed by - " + servant))
 }
 
 func HandleRoot(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Hello World")
-	fmt.Fprintf(w, "\nServed by %v\n", getServant())
-
+	getServant(w)
 }
 
 func HandleHome(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "This is the API endpoint")
-	fmt.Fprintf(w, "\nServed by %v\n", getServant())
-
+	getServant(w)
 }
 
 func PostRequest(w http.ResponseWriter, r *http.Request) {
@@ -34,9 +35,8 @@ func PostRequest(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "Error: %v", err)
 		return
 	}
-	fmt.Fprintf(w, "Payload %v\n", metadata)
-	fmt.Fprintf(w, "\nServed by %v\n", getServant())
-
+	fmt.Fprintf(w, "Payload %v", metadata)
+	getServant(w)
 }
 
 func UserPostRequest(w http.ResponseWriter, r *http.Request) {
@@ -56,5 +56,5 @@ func UserPostRequest(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(response)
-	w.Write([]byte("\nServed by - " + getServant()))
+	getServant(w)
 }
