@@ -64,6 +64,8 @@ services:
       - ./nginx/ssl:/etc/nginx/ssl:ro
     networks:
       - main-network
+    depends_on:
+      - auth
 
 volumes:
   auth-db:
