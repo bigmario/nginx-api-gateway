@@ -1,17 +1,59 @@
 version: '3'
 services:
 
+  auth-postgres:
+    image: postgres:14.1-alpine
+    ports:
+      - '5432:5432'
+    volumes:
+      - auth-db:/var/lib/postgresql/data
+    networks:
+      - main-network
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    env_file:
+      - .env
+    restart: always
+
+  redis:
+    image: redis:alpine
+    ports:
+      - 6380:6379
+    networks:
+      - main-network
+    env_file:
+      - .env
+  
+  auth:
+    build:
+      dockerfile: Dockerfile
+      context: ./auth
+      target: development
+    volumes:
+      - ./auth:/usr/src/app
+      - /usr/src/app/node_modules
+    env_file:
+      - .env
+    command: sh -c "npx prisma migrate dev && npx prisma db seed && npm run start:dev"
+    ports:
+      - '3010:3010'
+    networks:
+      - main-network
+    depends_on:
+      - auth-postgres
+      - redis
+  
   coffee:
     build: coffee/.
+    networks:
+      - main-network
 
   tea:
     build: tea/.
-
-  go-api:
-    build: go-api/.
-
-  auth:
-    build: auth/.
+    networks:
+      - main-network
 
   nginx:
     image: nginx
@@ -20,3 +62,12 @@ services:
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./nginx/ssl:/etc/nginx/ssl:ro
+    networks:
+      - main-network
+
+volumes:
+  auth-db:
+    driver: local
+
+networks:
+  main-network:

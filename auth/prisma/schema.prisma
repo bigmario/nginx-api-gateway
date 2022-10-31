@@ -1,0 +1,94 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["interactiveTransactions"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum identityPrefix {
+  J
+  G
+  V
+  E
+  C
+}
+
+///////USUARIOS
+
+model user {
+  id                 BigInt         @id @default(autoincrement()) @db.BigInt
+  name               String         @db.VarChar(512)
+  lastName           String         @db.VarChar(512)
+  identityCard       String         @db.VarChar(32)
+  identityCardprefix identityPrefix
+  primaryPhone       String         @db.VarChar(32)
+  secondaryPhone     String?        @db.VarChar(32)
+  imgUrl             String?        @db.VarChar(5140)
+  createdAt          DateTime?      @default(now())
+  updatedAt          DateTime?      @default(now()) @updatedAt
+  deletedAt          DateTime?
+
+  sessionId BigInt  @unique
+  session   session @relation(fields: [sessionId], references: [id])
+}
+
+model session {
+  id            BigInt    @id @default(autoincrement()) @db.BigInt
+  email         String    @unique @db.VarChar(64)
+  password      String    @db.VarChar(2048)
+  lastAccess    DateTime?
+  timesLoggedIn Int       @default(0)
+
+  type   session_type? @relation(fields: [typeId], references: [id])
+  typeId Int?          @db.SmallInt
+
+  rol   session_rol? @relation(fields: [rolId], references: [id])
+  rolId Int?         @db.SmallInt
+
+  user     user?
+  status   session_status? @relation(fields: [statusId], references: [id])
+  statusId Int?            @db.SmallInt
+}
+
+model session_type {
+  id          Int       @id @default(autoincrement()) @db.SmallInt
+  name        String    @db.VarChar(256)
+  description String?   @db.VarChar(512)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @default(now()) @updatedAt
+  deletedAt   DateTime?
+
+  sessions session[]
+  roles    session_rol[]
+}
+
+model session_rol {
+  id          Int       @id @default(autoincrement()) @db.SmallInt
+  name        String    @db.VarChar(256)
+  description String?   @db.VarChar(1024)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @default(now())
+  deletedAt   DateTime?
+
+  typeId Int          @db.SmallInt
+  type   session_type @relation(fields: [typeId], references: [id])
+
+  sessions session[]
+}
+
+model session_status {
+  id          Int       @id @default(autoincrement()) @db.SmallInt
+  name        String    @db.VarChar(256)
+  description String?   @db.VarChar(1024)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @default(now())
+  deletedAt   DateTime?
+
+  sessions session[]
+}
