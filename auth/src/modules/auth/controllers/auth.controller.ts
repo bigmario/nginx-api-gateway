@@ -42,7 +42,7 @@ export class AuthController {
   @ApiBearerAuth()
   @Get('/check')
   public async auth(@Request() request: IRequest) {
-    return;
+    return request.body;
   }
 
   @ApiBearerAuth()
