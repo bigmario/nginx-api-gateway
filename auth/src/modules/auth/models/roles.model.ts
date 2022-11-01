@@ -1,6 +1,7 @@
 export enum Role {
   SUPER_ADMIN = 1,
   ADMIN = 2,
-  PROGRAMADOR = 3,
-  VENDEDOR = 4,
+  PROGRAMMER = 3,
+  SELLER = 4,
+  DISPATCHER = 5,
 }

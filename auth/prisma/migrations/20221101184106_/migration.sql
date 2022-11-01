@@ -73,9 +73,6 @@ CREATE TABLE "session_status" (
 -- CreateIndex
 CREATE UNIQUE INDEX "user_sessionId_key" ON "user"("sessionId");
 
--- CreateIndex
-CREATE UNIQUE INDEX "session_email_key" ON "session"("email");
-
 -- AddForeignKey
 ALTER TABLE "user" ADD CONSTRAINT "user_sessionId_fkey" FOREIGN KEY ("sessionId") REFERENCES "session"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 

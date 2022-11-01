@@ -6,7 +6,6 @@ import {
   Delete,
   UseGuards,
   Body,
-  Response,
 } from '@nestjs/common';
 
 import { LocalAuthGuard } from '@auth/guards/local-auth.guard';

@@ -34,13 +34,13 @@ model user {
   updatedAt          DateTime?      @default(now()) @updatedAt
   deletedAt          DateTime?
 
-  sessionId BigInt  @unique
-  session   session @relation(fields: [sessionId], references: [id])
+  sessionId          BigInt               @unique
+  session            session              @relation(fields: [sessionId], references: [id])
 }
 
 model session {
   id            BigInt    @id @default(autoincrement()) @db.BigInt
-  email         String    @unique @db.VarChar(64)
+  email         String    @db.VarChar(64)
   password      String    @db.VarChar(2048)
   lastAccess    DateTime?
   timesLoggedIn Int       @default(0)

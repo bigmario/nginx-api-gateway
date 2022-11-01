@@ -61,7 +61,7 @@ export class AuthService {
           },
         },
         type: { select: { id: true, name: true } },
-        rol: { select: { id: true, name: true } },
+        rol: { select: { id: true, name: true, description: true } },
       },
     };
     const fullSessionInfo: any = await this.authRepo.getSessionInfo(
@@ -75,7 +75,11 @@ export class AuthService {
       ...fullSessionInfo.user,
       email: fullSessionInfo.email,
       type: fullSessionInfo.type.name,
-      rol: fullSessionInfo.rol.name,
+      role: {
+        id: fullSessionInfo.rol.id,
+        name: fullSessionInfo.rol.name,
+        description: fullSessionInfo.rol.description,
+      },
     };
   }
 
@@ -89,7 +93,7 @@ export class AuthService {
 
     await this.cacheManager.set(jti, jti, { ttl });
 
-    return { message: 'session closed successfully' };
+    return { message: 'Sesión cerrada exitosamente' };
   }
 
   public async getMyInfo(sessionInfo: IRequest['user']) {
@@ -121,7 +125,11 @@ export class AuthService {
       ...fullSessionInfo.user,
       email: fullSessionInfo.email,
       type: fullSessionInfo.type.name,
-      rol: fullSessionInfo.rol.name,
+      role: {
+        id: fullSessionInfo.rol.id,
+        name: fullSessionInfo.rol.name,
+        description: fullSessionInfo.rol.description,
+      },
     };
   }
 }

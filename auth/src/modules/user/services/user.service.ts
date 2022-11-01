@@ -34,7 +34,14 @@ export class UserService {
     createdAt: true,
     updatedAt: true,
     imgUrl: true,
-    session: true,
+    session: {
+      select: {
+        rol: {
+          select: { id: true, name: true, description: true },
+        },
+        email: true,
+      },
+    },
   };
 
   constructor(private readonly userRepository: UserRepository) {}
@@ -97,14 +104,6 @@ export class UserService {
           ]),
         }),
       },
-      include: {
-        session: {
-          select: {
-            email: true,
-            rolId: true,
-          },
-        },
-      },
     };
 
     const users = await this.userRepository.findAll<FindManyUsersArgs>(
@@ -122,9 +121,13 @@ export class UserService {
         name: user.name,
         lastName: user.lastName,
         identityCard: user.identityCard,
-        identityCardprefix: user.identityCardprefix,
+        identityCardPrefix: user.identityCardprefix,
         email: user.session.email,
-        rolId: user.session.rolId,
+        role: {
+          id: user.session.rol.id,
+          name: user.session.rol.name,
+          description: user.session.rol.description,
+        },
         primaryPhone: user.primaryPhone,
         secondaryPhone: user?.secondaryPhone || null,
         imgUrl: user?.imgUrl || null,
@@ -153,17 +156,22 @@ export class UserService {
         this.userRepository.prismaService.user,
         findOneOptions,
       );
+
       const response = {
         id: user.id,
         name: user.name,
         lastName: user.lastName,
         identityCard: user.identityCard,
-        identityCardprefix: user.identityCardprefix,
+        identityCardPrefix: user.identityCardprefix,
         primaryPhone: user.primaryPhone,
         secondaryPhone: user?.secondaryPhone || null,
         imgUrl: user.imgUrl,
         email: user.session.email,
-        roleId: user.session.rolId,
+        role: {
+          id: user.session.rol.id,
+          name: user.session.rol.name,
+          description: user.session.rol.description,
+        },
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,
       };
@@ -196,7 +204,7 @@ export class UserService {
       resourceUrl: true,
     });
 
-    return { message: 'Usuario creado con éxito', url: updatedUser.url };
+    return { message: 'Usuario actualoizado con éxito', url: updatedUser.url };
   }
 
   public async deleteUser(id: number) {

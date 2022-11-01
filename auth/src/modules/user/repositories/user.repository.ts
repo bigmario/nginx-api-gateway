@@ -19,21 +19,28 @@ export class UserRepository extends BaseRepository {
   public async updateUser(updateOptions: BaseUpdateBodyDto<UpdateUserDto>) {
     return this.prismaService.$transaction(
       async (prismaTransactionClient: Prisma.TransactionClient) => {
+        const sessionData: Prisma.sessionUpdateArgs['data'] = {
+          ...(updateOptions.body?.email && { email: updateOptions.body.email }),
+          ...(updateOptions.body?.password && {
+            password: hashSync(updateOptions.body.password, 10),
+          }),
+          ...(updateOptions.body?.rolId && { rolId: updateOptions.body.rolId }),
+          typeId: 1,
+          statusId: 1,
+        };
+
+        await this.updateSessionTransaction(
+          updateOptions.id,
+          sessionData,
+          prismaTransactionClient,
+        );
+
         const userData: Prisma.userUpdateArgs['data'] = {
           name: updateOptions.body.name,
           lastName: updateOptions.body.lastName,
           identityCard: updateOptions.body.identityCard,
           identityCardprefix: updateOptions.body.identityCardPrefix,
           primaryPhone: updateOptions.body.primaryPhone,
-          secondaryPhone: updateOptions.body.secondaryPhone,
-          imgUrl: updateOptions.body.imgUrl,
-          session: {
-            update: {
-              email: updateOptions.body.email,
-              rolId: updateOptions.body.rolId,
-              password: hashSync(updateOptions.body.password, 10),
-            },
-          },
         };
 
         const updatedUser: any = await this.updateUserTransaction(
@@ -78,6 +85,7 @@ export class UserRepository extends BaseRepository {
           identityCard: createOptions.body.identityCard,
           identityCardprefix: createOptions.body.identityCardPrefix,
           primaryPhone: createOptions.body.primaryPhone,
+          secondaryPhone: createOptions.body.secondaryPhone || null,
           session: { connect: { id: newSession.id } },
         };
 
@@ -142,6 +150,25 @@ export class UserRepository extends BaseRepository {
   ) {
     try {
       return await prismaTransactionClient.session.create({
+        data: sessionData,
+      });
+    } catch (error) {
+      console.log(error);
+      throw new InternalServerErrorException({
+        message: 'Ocurrio un error',
+        code: 'CS001',
+      });
+    }
+  }
+
+  private async updateSessionTransaction(
+    id: number,
+    sessionData: Prisma.sessionUpdateArgs['data'],
+    prismaTransactionClient: Prisma.TransactionClient,
+  ) {
+    try {
+      return await prismaTransactionClient.session.update({
+        where: { id },
         data: sessionData,
       });
     } catch (error) {

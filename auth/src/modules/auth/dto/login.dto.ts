@@ -12,5 +12,5 @@ export class LoginDto {
 
   @IsString()
   @IsOptional()
-  grant_type?: string;
+  grant_type: string;
 }

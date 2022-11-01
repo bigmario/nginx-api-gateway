@@ -1,12 +1,5 @@
 import { IsString, IsOptional, IsNumber, IsEmail } from 'class-validator';
-
-export enum IdentityPrefix {
-  J = 'J',
-  G = 'G',
-  V = 'V',
-  E = 'E',
-  C = 'C',
-}
+import { identityPrefix } from '@prisma/client';
 
 export class CreateUserDto {
   @IsString()
@@ -25,7 +18,7 @@ export class CreateUserDto {
   identityCard: string;
 
   @IsString()
-  identityCardPrefix: IdentityPrefix;
+  identityCardPrefix: identityPrefix;
 
   @IsString()
   primaryPhone: string;
@@ -33,10 +26,6 @@ export class CreateUserDto {
   @IsString()
   @IsOptional()
   secondaryPhone?: string;
-
-  @IsString()
-  @IsOptional()
-  imgUrl?: string;
 
   @IsNumber()
   rolId: number;
