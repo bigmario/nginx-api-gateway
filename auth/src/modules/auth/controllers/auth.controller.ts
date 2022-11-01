@@ -6,6 +6,7 @@ import {
   Delete,
   UseGuards,
   Body,
+  Response,
 } from '@nestjs/common';
 
 import { LocalAuthGuard } from '@auth/guards/local-auth.guard';
@@ -36,6 +37,12 @@ export class AuthController {
     @Body() body: LoginDto,
   ): Promise<any> {
     return this.authService.login(request.user);
+  }
+
+  @ApiBearerAuth()
+  @Get('/check')
+  public async auth(@Request() request: IRequest) {
+    return;
   }
 
   @ApiBearerAuth()
