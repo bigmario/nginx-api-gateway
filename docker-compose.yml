@@ -45,6 +45,19 @@ services:
       - auth-postgres
       - redis
   
+  sms_api:
+    build:
+      context: ./sms_api
+      dockerfile: Dockerfile
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    command: sh -c "uvicorn api.main:app --host sms_api"
+    ports:
+      - 8000:8000
+    networks:
+      - main-network
+  
   coffee:
     build: coffee/.
     networks:
@@ -66,6 +79,7 @@ services:
       - main-network
     depends_on:
       - auth
+      - sms_api
 
 volumes:
   auth-db:
