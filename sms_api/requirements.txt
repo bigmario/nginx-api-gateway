@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+twilio
+pydantic[dotenv]
+black
+email-validator
+fastapi-mail
+gunicorn
