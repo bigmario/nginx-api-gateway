@@ -19,8 +19,8 @@ class EmailService:
             MAIL_PORT=settings.mail_port,
             MAIL_SERVER=settings.mail_server,
             MAIL_FROM_NAME=settings.mail_from_name,
-            MAIL_TLS=bool(settings.mail_use_tls),
-            MAIL_SSL=bool(settings.mail_use_ssl),
+            MAIL_STARTTLS=bool(settings.mail_use_tls),
+            MAIL_SSL_TLS=bool(settings.mail_use_ssl),
             USE_CREDENTIALS=True,
             TEMPLATE_FOLDER=f"{os.getcwd()}/api/mail/templates",
         )

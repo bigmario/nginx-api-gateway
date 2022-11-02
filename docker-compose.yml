@@ -52,7 +52,7 @@ services:
     environment:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
-    command: sh -c "uvicorn api.main:app --host sms_api"
+    command: sh -c "uvicorn api.main:app"
     ports:
       - 8000:8000
     networks:
