@@ -32,6 +32,8 @@ go.work
 # Environment variables
 .env
 
+*/node_modules
+
 nginx/ssl/nginx.key
 nginx/ssl/nginx.crt
 
