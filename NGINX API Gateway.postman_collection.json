@@ -1,0 +1,363 @@
+{
+	"info": {
+		"_postman_id": "63e7165f-0b37-4062-928d-aa7d6e1d495a",
+		"name": "NGINX API Gateway",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15105056"
+	},
+	"item": [
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"admin@mail.com\",\n    \"password\": \"12345678\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost/login",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Me",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "CSlkjdfj3423lkj234jj==",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "https://localhost/me",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Andres\",\n  \"lastName\": \"Castro\",\n  \"email\": \"andres@mail.com\",\n  \"password\": \"12345678\",\n  \"identityCard\": \"14567499\",\n  \"identityCardPrefix\": \"V\",\n  \"primaryPhone\": \"12345\",\n  \"secondaryPhone\": \"12345\",\n  \"rolId\": 2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost/users",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update User",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"kkkk\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost/users/2",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"users",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Users",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "CSlkjdfj3423lkj234jj==",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "https://localhost/users",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User by ID",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "CSlkjdfj3423lkj234jj==",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "https://localhost/users/2",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"users",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Roles",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "CSlkjdfj3423lkj234jj==",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "https://localhost/users/roles",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"users",
+						"roles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Coffee",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "CSlkjdfj3423lkj234jj==",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "https://localhost/coffee",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"coffee"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Tea",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "CSlkjdfj3423lkj234jj==",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://localhost/tea",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"tea"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Email Main",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "CSlkjdfj3423lkj234jj==",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "https://localhost/email/main/",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"email",
+						"main",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Send Email Asynchronous Copy",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"subject\": \"prueba5555\",\n  \"body\": {\n    \"name\": \"mario\",\n    \"number\": \"12345\",\n    \"message\": \"probando\",\n    \"mail\": \"user@example.com\"\n  }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost/email/send/",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"email",
+						"send",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Send Email Backgroundtasks Copy",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"subject\": \"prueba\",\n  \"body\": {\n    \"name\": \"mario\",\n    \"number\": \"12345\",\n    \"message\": \"probando\",\n    \"mail\": \"user@example.com\"\n  }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost/email/send-task",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"email",
+						"send-task"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "oauth2",
+		"oauth2": [
+			{
+				"key": "addTokenTo",
+				"value": "header",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

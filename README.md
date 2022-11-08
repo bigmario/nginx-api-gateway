@@ -12,3 +12,12 @@ Run this command prior to building the containers
 
 ## Description
 Implementation fon an NGINX API Gateway, centralising and distributing API calls to several independent services, acting as a proxy and adding authentication and encryption for all traffic through the API gateway, ensuring a single point of contact, rather than traffic going directly to each microservice.
+
+## Deployment
+```bash
+# Import collection "NGINX API Gateway.postman_collection.json" on Postman or preferred client
+
+$ npm install
+$ docker-compose build --no-cache
+$ docker-compose up -d
+```
