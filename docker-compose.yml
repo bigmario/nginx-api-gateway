@@ -3,8 +3,8 @@ services:
 
   auth-postgres:
     image: postgres:14.1-alpine
-    ports:
-      - '5432:5432'
+    expose:
+      - '5432'
     volumes:
       - auth-db:/var/lib/postgresql/data
     networks:
@@ -19,8 +19,8 @@ services:
 
   redis:
     image: redis:alpine
-    ports:
-      - 6380:6379
+    expose:
+      - '6379'
     networks:
       - main-network
     env_file:
@@ -37,8 +37,8 @@ services:
     env_file:
       - .env
     command: sh -c "npx prisma migrate dev && npx prisma db seed && npm run start:dev"
-    ports:
-      - '3010:3010'
+    expose:
+      - '3010'
     networks:
       - main-network
     depends_on:
@@ -53,8 +53,8 @@ services:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     command: sh -c "uvicorn api.main:app --host sms_api"
-    ports:
-      - 8000:8000
+    expose:
+      - '8000'
     networks:
       - main-network
   
