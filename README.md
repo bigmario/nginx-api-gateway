@@ -26,5 +26,5 @@ $ docker-compose up -d
 ```bash
 # coffe service as an example
 # can be any of the services in docker-compose file
-docker-compose scale coffee=4
+$ docker-compose scale coffee=4
 ```
